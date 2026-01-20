@@ -1,6 +1,6 @@
 # Storage Engines
 
-![Storage Engine Diagram](./images/storage-engine.jpg)
+![Storage Engine Diagram](./images/storageEngine.jpg)
 
 **What is this**: Storage engines are nothing but databases that we use for our applications blindly. Whether NoSQL or SQL relational databases, all come under storage engines.
 
