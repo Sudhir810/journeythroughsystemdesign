@@ -1,32 +1,45 @@
 # SSTables and LSM Trees
 
-**What are SSTables?** Sorted string tables, the segment files that we defined in worlds simplest database, same files but with keys stored in sorted order.
+**What are SSTables?** Sorted string tables are the segment files we defined in the world's simplest database, but with keys stored in sorted order.
 
-**How does SSTables help?** Sorted string tables basically solves two issues we encountered with the segment files and hash index. - They help in Range queries - They reduce the number of keys to be stored in the memory in hash table.
-HOWww ? lets see..
+**How do SSTables help?** They solve two issues we encountered with segment files and hash indexes:
 
-**How SSTables Work**
+- They enable range queries
+- They reduce the number of keys that must be stored in the hash table memory
 
-There are different actors behind
+## How SSTables Work
 
-1. **MEMTABLE**: What is memtable here, this acts as a in in memory storage which basically store all the keys in sorted order so that for example Red-Black tree or AVL trees. All the incoming writes are first added to MEMTABLE.
+There are four key actors in an LSM tree:
 
-2. **SSTable**: Segment files, these are created once our in memory data structure is bigger than a threshold for example a few megabytes then all the data is written to SSTables.
+1. **MEMTABLE**: An in-memory data structure (like a Red-Black tree or AVL tree) that stores all keys in sorted order. All incoming writes are first added to the MEMTABLE.
 
-3. **WAL: Write Ahead Logs**: If the database crashes we might lose all the recent writes, to avoid this problem we maintain a separate log on disk, to which every write is appended, its only purpose is to restore memtable after a crash.
+2. **SSTable**: Segment files created when the MEMTABLE exceeds a threshold (e.g., a few megabytes). At that point, all MEMTABLE data is written to disk as SSTables.
 
-4. **Compaction**: As we discussed previously, compaction is basically merging multiple segment files together, here as well we will be merging sorted segment files together, this process here will be similar to mergesort. The situation where a key appears in several segment files we take the value of the most recent segment file for that particular key.
+3. **WAL (Write Ahead Logs)**: A separate log on disk to which every write is appended. This prevents data loss if the database crashes, allowing the MEMTABLE to be restored after recovery.
 
-Combining all above 4 actors result in our picture which is LSM trees.
+4. **Compaction**: Merging multiple sorted segment files together, similar to a merge sort operation. When a key appears in multiple segment files, the value from the most recent segment file is retained.
 
-**How Reads work here?**: So in order to find one value in LSM tree first the value is searched in memtable, then in the most recent segment file all the way to the oldest segment file.
+Combining these four actors creates an **LSM (Log-Structured Merge) tree**.
 
-**How Write work here?**: All above actors are at play for the same....
+## How Reads Work
 
-What else ...
+To find a value in an LSM tree, the search proceeds as follows:
 
-Right how **LSM TREES** here help in resolving previous two issues...
+1. Search in the MEMTABLE
+2. Search in the most recent SSTable
+3. Continue to older SSTables until found
 
-1. As the keys are sorted in order in segment files, the hash index that we defined previously does not require to store all the keys in the memory, a sparse index will do.
+## How Writes Work
 
-2. Since the data is stored in sorted order, we can perform range queries as well.
+All four actors work together in the write process:
+
+- New writes go to the MEMTABLE
+- When MEMTABLE exceeds threshold, it's flushed to disk as an SSTable
+- WAL ensures no data loss on crash
+- Compaction merges SSTables in the background
+
+## Why LSM Trees Solve Previous Issues
+
+1. **Memory Efficiency**: Since keys are sorted in segment files, the hash index doesn't need to store all keys in memory—a sparse index is sufficient.
+
+2. **Range Query Support**: With data stored in sorted order, range queries are now efficiently supported.
