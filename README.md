@@ -17,7 +17,7 @@ I am following the path laid out in **"Designing Data-Intensive Applications"** 
 
 ### Phase 1: Storage Engines
 
-- [Simple Segment Files and Hash Index](./StorageEngines/StorageEngine.md)
+- [Simple Segment Files and Hash Index](./StorageEngines/storageEngine.md)
 - [SSTables and LSM Trees](./StorageEngines/ssTablesAndLSMTree.md)
 
 ## 📈 My Learning Strategy
