@@ -116,7 +116,7 @@ Think of an LSM tree like a credit card:
 
 - **The Write** is the purchase (it's instant and easy).
 - **Compaction** is the bill (you have to pay it eventually).
-- **The Benefit** is that you can "buy" (write) a huge amount of data during a peak burst (like Black Friday) and "pay the bill" (compact) during the night when the system is quiet. A B-Tree forces you to pay in cash for every single item, which is safer but much slower during a rush.
+- **The Benefit** is that you can "buy" (write) a huge amount of data during a peak burst (like Black Friday) and "pay the bill" (compact) during the night when the system is quiet.
 
 ## Real life use cases of LSM-Trees
 
