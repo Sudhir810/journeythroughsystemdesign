@@ -19,6 +19,8 @@ I am following the path laid out in **"Designing Data-Intensive Applications"** 
 
 - [Simple Segment Files and Hash Index](./StorageEngines/storageEngine.md)
 - [SSTables and LSM Trees](./StorageEngines/ssTablesAndLSMTree.md)
+- [B-Trees](./StorageEngines/B-Tree.md)
+- [LSM Tree VS B-Trees](./StorageEngines/LsmVSB-Trees.md)
 
 ## 📈 My Learning Strategy
 
